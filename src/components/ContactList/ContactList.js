@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import ContactsListItem from "../ContactsListItem/ContactsListItem";
+import PropTypes from "prop-types";
 
 class ContactList extends Component {
   render() {
-    const { contactsItem } = this.props;
+    ContactList.propTypes = {
+      contactsItem: PropTypes.array,
+      onDeleteContact: PropTypes.func,
+    };
+    const { contactsItem, onDeleteContact } = this.props;
     return (
       <ul>
         {contactsItem.map((contactsItem) => {
@@ -12,7 +17,7 @@ class ContactList extends Component {
               key={contactsItem.id}
               name={contactsItem.name}
               number={contactsItem.number}
-              onDelete={() => this.props.onDeleteContact(contactsItem.id)}
+              onDelete={() => onDeleteContact(contactsItem.id)}
             />
           );
         })}

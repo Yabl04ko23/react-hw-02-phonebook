@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class ContactForm extends Component {
   state = {
@@ -13,21 +14,20 @@ class ContactForm extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    this.checkSameName(this.state.name);
-    this.props.onSubmit(this.state.name, this.state.number);
+    const { contactName, onSubmit } = this.props;
+    const { name, number } = this.state;
+    contactName.filter((contact) => contact.name.toLowerCase() === name.toLowerCase()).length === 0
+      ? onSubmit(name, number)
+      : alert(`${name} is alredy in contacs`);
     this.setState({ name: "", number: "" });
   };
 
-  checkSameName = (checkedName) => {
-    const { contactName } = this.props;
-    contactName.forEach((item) => {
-      if (item.name === checkedName) {
-        alert(`${checkedName} is already in contacts.`);
-      }
-    });
-  };
-
   render() {
+    ContactForm.propTypes = {
+      onSubmit: PropTypes.func,
+      contactName: PropTypes.array,
+    };
+
     const { name, number } = this.state;
     return (
       <form className="contact-form" onSubmit={this.handleSubmit}>

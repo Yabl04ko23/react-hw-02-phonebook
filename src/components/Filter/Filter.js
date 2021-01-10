@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Filter extends Component {
   render() {
+    Filter.propTypes = {
+      filterValue: PropTypes.string,
+      changeFilter: PropTypes.func,
+    };
+    const { filterValue, changeFilter } = this.props;
     return (
       <div>
         <label className="contact-label">
@@ -11,8 +17,8 @@ class Filter extends Component {
             type="text"
             placeholder="Enter name"
             name="filter"
-            value={this.props.filterValue}
-            onChange={(e) => this.props.changeFilter(e.target.value)}
+            value={filterValue}
+            onChange={(e) => changeFilter(e.target.value)}
           />
         </label>
       </div>
